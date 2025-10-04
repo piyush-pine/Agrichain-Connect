@@ -1,10 +1,27 @@
+
+'use client';
+
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, UserCheck, BarChart, Users } from "lucide-react";
+import { AlertTriangle, UserCheck, BarChart, Users, Check, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { useToast } from '@/hooks/use-toast';
 
-const mockVerifications = [
+
+const initialVerifications = [
   { id: 'usr_001', name: 'Ravi Kumar', type: 'Aadhaar', status: 'Pending' },
   { id: 'usr_002', name: 'Sunita Devi', type: 'Product', status: 'Pending' },
 ];
@@ -15,6 +32,18 @@ const mockFraudAlerts = [
 ];
 
 export default function AdminDashboardPage() {
+    const [verifications, setVerifications] = useState(initialVerifications);
+    const { toast } = useToast();
+
+    const handleReview = (id: string, approved: boolean) => {
+        setVerifications(verifications.filter(v => v.id !== id));
+        toast({
+            title: `Verification ${approved ? 'Approved' : 'Rejected'}`,
+            description: `The item has been processed and removed from the queue.`,
+        });
+    };
+
+
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8">
@@ -39,7 +68,7 @@ export default function AdminDashboardPage() {
             <UserCheck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockVerifications.length}</div>
+            <div className="text-2xl font-bold">{verifications.length}</div>
             <p className="text-xs text-muted-foreground">Action required</p>
           </CardContent>
         </Card>
@@ -72,28 +101,58 @@ export default function AdminDashboardPage() {
             <CardDescription>Review and approve pending user and product verifications.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>User</TableHead>
-                  <TableHead>Verification Type</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mockVerifications.map(v => (
-                  <TableRow key={v.id}>
-                    <TableCell className="font-medium">{v.name}</TableCell>
-                    <TableCell>{v.type}</TableCell>
-                    <TableCell><Badge variant="outline">{v.status}</Badge></TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="outline" size="sm">Review</Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            {verifications.length > 0 ? (
+                <Table>
+                <TableHeader>
+                    <TableRow>
+                    <TableHead>User</TableHead>
+                    <TableHead>Verification Type</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Action</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {verifications.map(v => (
+                    <TableRow key={v.id}>
+                        <TableCell className="font-medium">{v.name}</TableCell>
+                        <TableCell>{v.type}</TableCell>
+                        <TableCell><Badge variant="outline">{v.status}</Badge></TableCell>
+                        <TableCell className="text-right">
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="outline" size="sm">Review</Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                <AlertDialogTitle>Review {v.type} Verification</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Review the details for {v.name}'s {v.type.toLowerCase()} verification. This action cannot be undone.
+                                </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleReview(v.id, false)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                    <X className="mr-2 h-4 w-4" /> Reject
+                                </AlertDialogAction>
+                                <AlertDialogAction onClick={() => handleReview(v.id, true)} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                   <Check className="mr-2 h-4 w-4" /> Approve
+                                </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                        </TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
+            ) : (
+                <div className="text-center p-8 text-muted-foreground">
+                    <UserCheck className="mx-auto h-12 w-12 mb-4" />
+                    <h3 className="text-lg font-semibold">Queue Clear!</h3>
+                    <p>No pending verifications at the moment.</p>
+                </div>
+            )}
+            
           </CardContent>
         </Card>
 
