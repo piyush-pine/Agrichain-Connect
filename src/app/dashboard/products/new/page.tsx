@@ -205,18 +205,21 @@ export default function NewProductPage() {
             <div className="space-y-2">
                 <Label htmlFor="product-image-upload">Product Images</Label>
                 <div className="border-2 border-dashed border-muted rounded-lg p-6 text-center">
-                    <Input id="product-image-upload" type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
+                    <input id="product-image-upload" type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
                     {imagePreview ? (
                         <div className="relative w-32 h-32 mx-auto">
-                            <Image src={imagePreview} alt="Product preview" layout="fill" className="rounded-md object-cover" />
+                            <Image src={imagePreview} alt="Product preview" fill className="rounded-md object-cover" />
                         </div>
                     ) : (
-                        <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
+                        <div className="flex flex-col items-center gap-2">
+                             <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
+                             <p className="mt-2 text-sm text-muted-foreground">
+                                {imageFile ? imageFile.name : 'Drag & drop or click to upload'}
+                            </p>
+                        </div>
                     )}
-                    <p className="mt-2 text-sm text-muted-foreground">
-                        {imageFile ? imageFile.name : 'Drag & drop or click to upload'}
-                    </p>
-                    <Button variant="outline" className="mt-2" type="button" onClick={() => document.getElementById('product-image-upload')?.click()}>Browse Files</Button>
+                   
+                    <Button variant="outline" className="mt-4" type="button" onClick={() => document.getElementById('product-image-upload')?.click()}>Browse Files</Button>
                 </div>
             </div>
 
@@ -232,3 +235,5 @@ export default function NewProductPage() {
     </div>
   );
 }
+
+    
