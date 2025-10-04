@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Leaf, Globe, User, LogIn } from "lucide-react";
+import { ShoppingCart, Leaf, Globe, User, LogIn, Sprout } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -48,64 +48,50 @@ export function SiteHeader() {
   const isAuthenticated = false; // Mock authentication state
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-sm">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center">
         <Logo />
-        <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
-            <Link
-              href="/"
-              className="transition-colors hover:text-primary"
-            >
-              Marketplace
-            </Link>
-            <Link
-              href="/dashboard"
-              className="transition-colors hover:text-primary"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/admin"
-              className="transition-colors hover:text-primary"
-            >
-              Admin
-            </Link>
-          </nav>
-          <div className="flex items-center space-x-2">
+        <div className="flex flex-1 items-center justify-end space-x-2">
             <LanguageToggle />
             <Button variant="ghost" size="icon" asChild>
-              <Link href="/cart">
-                <ShoppingCart className="h-5 w-5" />
-                {cart.length > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="absolute top-0 right-0 h-5 w-5 justify-center p-0 text-xs"
-                  >
-                    {cart.reduce((acc, item) => acc + item.quantity, 0)}
-                  </Badge>
-                )}
-                <span className="sr-only">Shopping Cart</span>
-              </Link>
+                <Link href="/cart">
+                    <ShoppingCart className="h-5 w-5" />
+                    {cart.length > 0 && (
+                        <Badge variant="destructive" className="absolute top-2 right-2 h-4 w-4 justify-center rounded-full p-0 text-xs">
+                            {cart.length}
+                        </Badge>
+                    )}
+                    <span className="sr-only">Shopping Cart</span>
+                </Link>
             </Button>
-            {isAuthenticated ? (
-               <Button variant="ghost" size="icon" asChild>
-                <Link href="/dashboard">
-                  <User className="h-5 w-5" />
-                  <span className="sr-only">My Profile</span>
-                </Link>
-              </Button>
-            ) : (
-              <Button asChild>
+          {isAuthenticated ? (
+             <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="secondary" size="icon" className="rounded-full">
+                        <User className="h-5 w-5" />
+                        <span className="sr-only">Toggle user menu</span>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                        <Link href="/dashboard">Dashboard</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link href="/dashboard/orders">My Orders</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild>
                 <Link href="/login">
-                  <LogIn className="mr-2 h-4 w-4" />
-                  Login / Sign Up
+                    <LogIn className="mr-2 h-4 w-4"/>
+                    Login
                 </Link>
-              </Button>
-            )}
-          </div>
+            </Button>
+          )}
         </div>
       </div>
-    </header>
+    </nav>
   );
 }
