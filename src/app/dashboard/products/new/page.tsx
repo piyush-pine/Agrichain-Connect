@@ -1,7 +1,9 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,12 +12,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Wand2, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { generateProductDescription } from '@/ai/flows/generate-product-description';
 
 export default function NewProductPage() {
     const { toast } = useToast();
-    const [description, setDescription] = useState('');
+    const router = useRouter();
+
+    const [productName, setProductName] = useState('');
+    const [category, setCategory] = useState('');
+    const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
     const [keywords, setKeywords] = useState('');
+    const [description, setDescription] = useState('');
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    
     const [isGenerating, setIsGenerating] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleGenerateDescription = async () => {
         if (!keywords) {
@@ -27,16 +40,69 @@ export default function NewProductPage() {
             return;
         }
         setIsGenerating(true);
-        // In a real app, you would call the GenAI flow here.
-        // For now, we'll simulate a delay and a mock response.
-        setTimeout(() => {
-            const generatedDesc = `Discover the unparalleled freshness of our ${keywords.toLowerCase()}! Sourced directly from local farms, these products are bursting with flavor and nutrients. Grown using sustainable, organic methods, you can taste the difference that ethical farming makes. Perfect for home-cooked meals, these are guaranteed to be a family favorite.`;
-            setDescription(generatedDesc);
-            setIsGenerating(false);
+        try {
+            const result = await generateProductDescription({ keywords });
+            if (result.description) {
+                setDescription(result.description);
+                toast({
+                    title: 'Success!',
+                    description: 'AI-powered description has been generated.',
+                });
+            } else {
+                 throw new Error("AI did not return a description.");
+            }
+        } catch (error) {
+            console.error("Failed to generate description:", error);
             toast({
-                title: 'Success!',
-                description: 'AI-powered description has been generated.',
+                variant: 'destructive',
+                title: 'Generation Failed',
+                description: 'Could not generate a description. Please try again.',
             });
+        } finally {
+            setIsGenerating(false);
+        }
+    };
+
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        // Form validation
+        if (!productName || !category || !price || !stock || !description || !imageFile) {
+            toast({
+                variant: 'destructive',
+                title: 'Incomplete Form',
+                description: 'Please fill out all fields and upload an image.',
+            });
+            setIsSubmitting(false);
+            return;
+        }
+
+        // Simulate form submission
+        toast({
+            title: 'Submitting...',
+            description: 'Listing your new product on the marketplace.',
+        });
+
+        setTimeout(() => {
+            setIsSubmitting(false);
+            toast({
+                title: 'Product Listed!',
+                description: `${productName} is now available for sale.`,
+            });
+            router.push('/dashboard/products');
         }, 1500);
     };
 
@@ -50,23 +116,29 @@ export default function NewProductPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="product-name">Product Name</Label>
-                <Input id="product-name" placeholder="e.g., Organic Tomatoes" />
+                <Input 
+                    id="product-name" 
+                    placeholder="e.g., Organic Tomatoes" 
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                    required
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <Select>
+                <Select value={category} onValueChange={setCategory} required>
                   <SelectTrigger id="category">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="vegetable">Vegetable</SelectItem>
-                    <SelectItem value="fruit">Fruit</SelectItem>
-                    <SelectItem value="grain">Grain</SelectItem>
-                    <SelectItem value="dairy">Dairy</SelectItem>
+                    <SelectItem value="Vegetable">Vegetable</SelectItem>
+                    <SelectItem value="Fruit">Fruit</SelectItem>
+                    <SelectItem value="Grain">Grain</SelectItem>
+                    <SelectItem value="Dairy">Dairy</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -90,7 +162,7 @@ export default function NewProductPage() {
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <Label htmlFor="description">Product Description</Label>
-                <Button variant="ghost" size="sm" onClick={handleGenerateDescription} disabled={isGenerating}>
+                <Button variant="ghost" size="sm" type="button" onClick={handleGenerateDescription} disabled={isGenerating}>
                   <Wand2 className="mr-2 h-4 w-4" />
                   {isGenerating ? 'Generating...' : 'AI Suggestion'}
                 </Button>
@@ -101,32 +173,58 @@ export default function NewProductPage() {
                 rows={5}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                required
               />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div className="space-y-2">
                     <Label htmlFor="price">Price (per kg)</Label>
-                    <Input id="price" type="number" placeholder="e.g., 2.50" />
+                    <Input 
+                        id="price" 
+                        type="number" 
+                        placeholder="e.g., 2.50" 
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        required
+                    />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="stock">Stock (in kg)</Label>
-                    <Input id="stock" type="number" placeholder="e.g., 100" />
+                    <Input 
+                        id="stock" 
+                        type="number" 
+                        placeholder="e.g., 100" 
+                        value={stock}
+                        onChange={(e) => setStock(e.target.value)}
+                        required
+                    />
                 </div>
             </div>
 
             <div className="space-y-2">
-                <Label>Product Images</Label>
+                <Label htmlFor="product-image-upload">Product Images</Label>
                 <div className="border-2 border-dashed border-muted rounded-lg p-6 text-center">
-                    <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
-                    <p className="mt-2 text-sm text-muted-foreground">Drag & drop files here, or</p>
-                    <Button variant="outline" className="mt-2">Browse Files</Button>
+                    <Input id="product-image-upload" type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
+                    {imagePreview ? (
+                        <div className="relative w-32 h-32 mx-auto">
+                            <Image src={imagePreview} alt="Product preview" layout="fill" className="rounded-md object-cover" />
+                        </div>
+                    ) : (
+                        <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
+                    )}
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        {imageFile ? imageFile.name : 'Drag & drop or click to upload'}
+                    </p>
+                    <Button variant="outline" className="mt-2" type="button" onClick={() => document.getElementById('product-image-upload')?.click()}>Browse Files</Button>
                 </div>
             </div>
 
             <div className="flex justify-end gap-4">
-                <Button variant="outline" type="button">Save as Draft</Button>
-                <Button type="submit">List Product</Button>
+                <Button variant="outline" type="button" onClick={() => router.push('/dashboard/products')}>Cancel</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Listing Product...' : 'List Product'}
+                </Button>
             </div>
           </form>
         </CardContent>
