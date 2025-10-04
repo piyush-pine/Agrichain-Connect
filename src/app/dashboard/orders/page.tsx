@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Truck } from "lucide-react";
+import Link from "next/link";
 
 const mockOrders = [
   { id: 'ORD-001', date: '2023-10-26', customer: 'Alice Johnson', total: 25.50, status: 'Delivered' },
@@ -54,8 +55,10 @@ export default function OrdersPage() {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="outline" size="sm">
-                       <Truck className="mr-2 h-4 w-4" /> Track
+                    <Button variant="outline" size="sm" asChild>
+                       <Link href={`/dashboard/orders/${order.id}`}>
+                        <Truck className="mr-2 h-4 w-4" /> Track
+                       </Link>
                     </Button>
                   </TableCell>
                 </TableRow>
