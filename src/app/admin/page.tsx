@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, UserCheck, BarChart, Users, Check, X } from "lucide-react";
+import { AlertTriangle, UserCheck, BarChart, Users, Check, X, ShieldOff } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,13 +26,14 @@ const initialVerifications = [
   { id: 'usr_002', name: 'Sunita Devi', type: 'Product', status: 'Pending' },
 ];
 
-const mockFraudAlerts = [
+const initialFraudAlerts = [
   { id: 'lst_101', product: 'Organic Honey', seller: 'FarmFresh Co.', reason: 'Price Anomaly', score: 0.92 },
   { id: 'lst_102', product: 'Basmati Rice', seller: 'Grains & More', reason: 'Duplicate Listing', score: 0.78 },
 ];
 
 export default function AdminDashboardPage() {
     const [verifications, setVerifications] = useState(initialVerifications);
+    const [fraudAlerts, setFraudAlerts] = useState(initialFraudAlerts);
     const { toast } = useToast();
 
     const handleReview = (id: string, approved: boolean) => {
@@ -40,6 +41,14 @@ export default function AdminDashboardPage() {
         toast({
             title: `Verification ${approved ? 'Approved' : 'Rejected'}`,
             description: `The item has been processed and removed from the queue.`,
+        });
+    };
+    
+    const handleInvestigation = (id: string, suspended: boolean) => {
+        setFraudAlerts(fraudAlerts.filter(a => a.id !== id));
+        toast({
+            title: `Alert Resolved`,
+            description: `The listing has been ${suspended ? 'suspended' : 'cleared'}.`,
         });
     };
 
@@ -78,7 +87,7 @@ export default function AdminDashboardPage() {
             <AlertTriangle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockFraudAlerts.length}</div>
+            <div className="text-2xl font-bold">{fraudAlerts.length}</div>
             <p className="text-xs text-muted-foreground">High-priority alerts</p>
           </CardContent>
         </Card>
@@ -162,32 +171,65 @@ export default function AdminDashboardPage() {
             <CardDescription>Potentially fraudulent listings detected by our AI model.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Product</TableHead>
-                  <TableHead>Reason</TableHead>
-                  <TableHead>Confidence</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mockFraudAlerts.map(alert => (
-                  <TableRow key={alert.id}>
-                    <TableCell className="font-medium">{alert.product}</TableCell>
-                    <TableCell>{alert.reason}</TableCell>
-                    <TableCell>
-                      <Badge variant={alert.score > 0.9 ? 'destructive' : 'secondary'}>
-                        {(alert.score * 100).toFixed(0)}%
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="outline" size="sm">Investigate</Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            {fraudAlerts.length > 0 ? (
+                <Table>
+                <TableHeader>
+                    <TableRow>
+                    <TableHead>Product</TableHead>
+                    <TableHead>Reason</TableHead>
+                    <TableHead>Confidence</TableHead>
+                    <TableHead className="text-right">Action</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {fraudAlerts.map(alert => (
+                    <TableRow key={alert.id}>
+                        <TableCell className="font-medium">{alert.product}</TableCell>
+                        <TableCell>{alert.reason}</TableCell>
+                        <TableCell>
+                        <Badge variant={alert.score > 0.9 ? 'destructive' : 'secondary'}>
+                            {(alert.score * 100).toFixed(0)}%
+                        </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="outline" size="sm">Investigate</Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Investigate Fraud Alert</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        <p>Product: <span className="font-semibold">{alert.product}</span></p>
+                                        <p>Seller: <span className="font-semibold">{alert.seller}</span></p>
+                                        <p>Reason: <span className="font-semibold">{alert.reason}</span></p>
+                                        <p>Confidence: <span className="font-semibold">{(alert.score * 100).toFixed(0)}%</span></p>
+                                        <p className="mt-2">Take action on this listing.</p>
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                     <AlertDialogAction onClick={() => handleInvestigation(alert.id, false)}>
+                                        <Check className="mr-2 h-4 w-4" /> Dismiss Alert
+                                    </AlertDialogAction>
+                                    <AlertDialogAction onClick={() => handleInvestigation(alert.id, true)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                        <ShieldOff className="mr-2 h-4 w-4" /> Suspend Listing
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                        </TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
+            ) : (
+                <div className="text-center p-8 text-muted-foreground">
+                    <AlertTriangle className="mx-auto h-12 w-12 mb-4" />
+                    <h3 className="text-lg font-semibold">No Alerts</h3>
+                    <p>The system has not detected any fraudulent activity.</p>
+                </div>
+            )}
           </CardContent>
         </Card>
       </div>
