@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "tomatoes",
+      "description": "A basket of fresh, ripe tomatoes on a rustic wooden table.",
+      "imageUrl": "https://images.unsplash.com/photo-1757332334678-e76d258c49c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmcmVzaCUyMHRvbWF0b2VzfGVufDB8fHx8MTc1OTU3ODU2Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fresh tomatoes"
+    },
+    {
+      "id": "carrots",
+      "description": "A bunch of vibrant orange carrots with green tops.",
+      "imageUrl": "https://images.unsplash.com/photo-1568261854328-1840d62ea440?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxvcmFuZ2UlMjBjYXJyb3RzfGVufDB8fHx8MTc1OTUzODE0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "orange carrots"
+    },
+    {
+      "id": "lettuce",
+      "description": "A crisp head of green lettuce with water droplets.",
+      "imageUrl": "https://images.unsplash.com/photo-1657411658285-2742c4c5ed1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxncmVlbiUyMGxldHR1Y2V8ZW58MHx8fHwxNzU5NDg4MTIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "green lettuce"
+    },
+    {
+      "id": "apples",
+      "description": "A collection of shiny red apples in a woven basket.",
+      "imageUrl": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyZWQlMjBhcHBsZXN8ZW58MHx8fHwxNzU5NDg4MTQ0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "red apples"
+    },
+    {
+      "id": "bananas",
+      "description": "A bunch of yellow bananas.",
+      "imageUrl": "https://images.unsplash.com/photo-1623810836868-057b23aef3aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx5ZWxsb3clMjBiYW5hbmFzfGVufDB8fHx8MTc1OTQ5Mzc1OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "yellow bananas"
+    },
+    {
+      "id": "milk",
+      "description": "A glass bottle of milk on a wooden surface with a green field in the background.",
+      "imageUrl": "https://images.unsplash.com/photo-1634141510639-d691d86f47be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtaWxrJTIwYm90dGxlfGVufDB8fHx8MTc1OTUyNjkwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "milk bottle"
+    }
+  ]
 }
