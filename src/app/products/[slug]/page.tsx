@@ -3,7 +3,7 @@
 
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { mockProducts, mockFarmers } from "@/lib/data";
+import { useProducts } from "@/context/ProductContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,12 +16,19 @@ import { useState } from "react";
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
   const { toast } = useToast();
   const { addToCart } = useCart();
+  const { products } = useProducts();
   const [quantity, setQuantity] = useState(1);
 
-  const product = mockProducts.find((p) => p.slug === params.slug);
+  const product = products.find((p) => p.slug === params.slug);
 
   if (!product) {
-    notFound();
+    // We need to wait for products to load from context
+    // This is a simple loading state. In a real app, you'd use a skeleton loader.
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p>Loading product...</p>
+      </div>
+    );
   }
 
   const farmer = product.farmer;

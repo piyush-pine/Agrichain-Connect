@@ -1,3 +1,6 @@
+
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -27,7 +30,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { mockProducts } from "@/lib/data";
+import { useProducts } from "@/context/ProductContext";
 import { Product } from "@/lib/types";
 
 function ProductCard({ product }: { product: Product }) {
@@ -75,6 +78,8 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export default function MarketplacePage() {
+  const { products } = useProducts();
+
   return (
     <div className="container mx-auto px-4 py-8">
       <section className="text-center bg-card rounded-lg p-8 md:p-12 mb-12 shadow-md">
@@ -144,7 +149,7 @@ export default function MarketplacePage() {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {mockProducts.map((product) => (
+          {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

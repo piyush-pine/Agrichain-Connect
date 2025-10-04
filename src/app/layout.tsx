@@ -1,7 +1,9 @@
+
 import type { Metadata } from "next";
 import { PT_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import { CartProvider } from "@/context/CartContext";
+import { ProductProvider } from "@/context/ProductContext";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -43,13 +45,15 @@ export default function RootLayout({
           ptSans.variable
         )}
       >
-        <CartProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-          </div>
-          <Toaster />
-        </CartProvider>
+        <ProductProvider>
+          <CartProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+            </div>
+            <Toaster />
+          </CartProvider>
+        </ProductProvider>
       </body>
     </html>
   );

@@ -13,13 +13,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Wand2, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { generateProductDescription } from '@/ai/flows/generate-product-description';
+import { useProducts } from '@/context/ProductContext';
+import { mockFarmers } from '@/lib/data';
+import type { ProductCategory } from '@/lib/types';
 
 export default function NewProductPage() {
     const { toast } = useToast();
     const router = useRouter();
+    const { addProduct } = useProducts();
 
     const [productName, setProductName] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState<ProductCategory | ''>('');
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [keywords, setKeywords] = useState('');
@@ -77,26 +81,42 @@ export default function NewProductPage() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsSubmitting(true);
-
-        // Form validation
-        if (!productName || !category || !price || !stock || !description || !imageFile) {
+        
+        if (!productName || !category || !price || !stock || !description || !imagePreview) {
             toast({
                 variant: 'destructive',
                 title: 'Incomplete Form',
                 description: 'Please fill out all fields and upload an image.',
             });
-            setIsSubmitting(false);
             return;
         }
+        
+        setIsSubmitting(true);
 
-        // Simulate form submission
         toast({
             title: 'Submitting...',
             description: 'Listing your new product on the marketplace.',
         });
 
+        // Simulate form submission
         setTimeout(() => {
+            const newProduct = {
+                id: `prod-${Date.now()}`,
+                slug: productName.toLowerCase().replace(/\s+/g, '-'),
+                name: productName,
+                description: description,
+                price: parseFloat(price),
+                category: category as ProductCategory,
+                farmer: mockFarmers[0], // Assuming the first farmer is the current user
+                imageUrl: imagePreview,
+                imageHint: productName,
+                blockchainVerified: false, // Default to not verified
+                sustainabilityTags: keywords.split(',').map(k => k.trim()).filter(Boolean),
+                stock: parseInt(stock),
+            };
+
+            addProduct(newProduct);
+
             setIsSubmitting(false);
             toast({
                 title: 'Product Listed!',
@@ -130,7 +150,7 @@ export default function NewProductPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <Select value={category} onValueChange={setCategory} required>
+                <Select value={category} onValueChange={(value) => setCategory(value as ProductCategory)} required>
                   <SelectTrigger id="category">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
@@ -187,6 +207,7 @@ export default function NewProductPage() {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         required
+                        step="0.01"
                     />
                 </div>
                 <div className="space-y-2">
@@ -211,10 +232,10 @@ export default function NewProductPage() {
                             <Image src={imagePreview} alt="Product preview" fill className="rounded-md object-cover" />
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center gap-2">
-                             <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
-                             <p className="mt-2 text-sm text-muted-foreground">
-                                {imageFile ? imageFile.name : 'Drag & drop or click to upload'}
+                        <div className="flex flex-col items-center gap-2 text-muted-foreground cursor-pointer" onClick={() => document.getElementById('product-image-upload')?.click()}>
+                             <Upload className="mx-auto h-12 w-12" />
+                             <p className="mt-2 text-sm">
+                                Drag & drop or click to upload
                             </p>
                         </div>
                     )}
@@ -235,5 +256,3 @@ export default function NewProductPage() {
     </div>
   );
 }
-
-    

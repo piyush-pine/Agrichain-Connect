@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -6,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { mockProducts } from '@/lib/data';
+import { useProducts } from '@/context/ProductContext';
 import { PlusCircle, MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import {
     DropdownMenu,
@@ -16,9 +17,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 // For this demo, we'll just show all mock products as if they belong to the current user.
-const userProducts = mockProducts.slice(0, 4);
+// This will now come from the context.
+// const userProducts = mockProducts.slice(0, 4);
 
 export default function MyProductsPage() {
+    const { products } = useProducts();
+    // Assuming the first farmer is the "current user" for this demo
+    const userProducts = products.filter(p => p.farmer.id === 'farmer-1');
+
   return (
     <div className="p-4 sm:p-6 lg:p-8">
         <div className="flex items-center justify-between mb-6">

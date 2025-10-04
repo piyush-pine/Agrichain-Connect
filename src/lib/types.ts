@@ -1,3 +1,4 @@
+
 export interface Farmer {
   id: string;
   name: string;
@@ -5,13 +6,15 @@ export interface Farmer {
   rating: number;
 }
 
+export type ProductCategory = 'Vegetable' | 'Fruit' | 'Grain' | 'Dairy';
+
 export interface Product {
   id: string;
   slug: string;
   name:string;
   description: string;
   price: number;
-  category: 'Vegetable' | 'Fruit' | 'Grain' | 'Dairy';
+  category: ProductCategory;
   farmer: Farmer;
   imageUrl: string;
   imageHint: string;
