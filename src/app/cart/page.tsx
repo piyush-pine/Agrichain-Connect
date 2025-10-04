@@ -121,7 +121,7 @@ export default function CartPage() {
                   </div>
                 </div>
                 <Button asChild size="lg" className="w-full mt-6">
-                  <Link href="/login">
+                  <Link href="/checkout">
                     Proceed to Checkout <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
