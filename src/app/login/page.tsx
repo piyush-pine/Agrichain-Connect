@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Leaf, Loader2, User, ShoppingCart, Truck, UserCog } from "lucide-react";
 import { useToast } from '@/hooks/use-toast';
+import { BlockchainBackground } from '@/components/BlockchainBackground';
 
 type LoginStep = 'phone' | 'role';
 type Role = 'farmer' | 'buyer' | 'logistics' | 'admin';
@@ -73,8 +74,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] p-4">
-      <Card className="w-full max-w-md mx-auto">
+    <div className="relative flex items-center justify-center min-h-[calc(100vh-4rem)] p-4">
+      <BlockchainBackground />
+      <Card className="w-full max-w-md mx-auto z-10 bg-card/80 backdrop-blur-sm">
         <CardHeader className="text-center">
           <Leaf className="mx-auto h-10 w-10 text-primary mb-2" />
           {step === 'phone' ? (

@@ -1,0 +1,73 @@
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: hsl(var(--background));
+    z-index: 0;
+}
+
+.dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: hsl(var(--primary) / 0.3);
+    border-radius: 50%;
+    animation: move 20s linear infinite;
+    will-change: transform;
+}
+
+.background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, hsla(var(--background), 0) 0%, hsl(var(--background)) 70%);
+}
+
+
+.dot-1 { top: 10%; left: 15%; animation-delay: -2s; animation-duration: 22s; }
+.dot-2 { top: 20%; left: 80%; animation-delay: -5s; animation-duration: 25s; }
+.dot-3 { top: 85%; left: 10%; animation-delay: -8s; animation-duration: 18s; }
+.dot-4 { top: 50%; left: 50%; animation-delay: -1s; animation-duration: 28s; }
+.dot-5 { top: 90%; left: 90%; animation-delay: -10s; animation-duration: 21s; }
+.dot-6 { top: 5%; left: 5%; animation-delay: -12s; animation-duration: 24s; }
+.dot-7 { top: 70%; left: 30%; animation-delay: -4s; animation-duration: 19s; }
+.dot-8 { top: 30%; left: 70%; animation-delay: -7s; animation-duration: 26s; }
+.dot-9 { top: 40%; left: 20%; animation-delay: -9s; animation-duration: 23s; }
+.dot-10 { top: 60%; left: 85%; animation-delay: -3s; animation-duration: 20s; }
+.dot-11 { top: 75%; left: 60%; animation-delay: -11s; animation-duration: 27s; }
+.dot-12 { top: 15%; left: 40%; animation-delay: -6s; animation-duration: 22s; }
+.dot-13 { top: 5%; left: 95%; animation-delay: -14s; animation-duration: 19s; }
+.dot-14 { top: 95%; left: 2%; animation-delay: -13s; animation-duration: 25s; }
+.dot-15 { top: 55%; left: 5%; animation-delay: -15s; animation-duration: 20s; }
+
+
+@keyframes move {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(calc(var(--dx, 20) * 1vw), calc(var(--dy, 20) * 1vh)) scale(1.5); }
+  50% { transform: translate(calc(var(--dx, -15) * -1vw), calc(var(--dy, -10) * -1vh)) scale(1); }
+  75% { transform: translate(calc(var(--dx, 10) * 1vw), calc(var(--dy, -25) * 1vh)) scale(1.5); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.dot-1 { --dx: 25; --dy: -15; }
+.dot-2 { --dx: -20; --dy: 20; }
+.dot-3 { --dx: 15; --dy: 25; }
+.dot-4 { --dx: -10; --dy: -10; }
+.dot-5 { --dx: 18; --dy: -22; }
+.dot-6 { --dx: -25; --dy: 10; }
+.dot-7 { --dx: 20; --dy: 15; }
+.dot-8 { --dx: -12; --dy: -18; }
+.dot-9 { --dx: 30; --dy: -10; }
+.dot-10 { --dx: -28; --dy: 8; }
+.dot-11 { --dx: 10; --dy: 30; }
+.dot-12 { --dx: -18; --dy: -25; }
+.dot-13 { --dx: 22; --dy: 12; }
+.dot-14 { --dx: -15; --dy: -30; }
+.dot-15 { --dx: 28; --dy: 18; }

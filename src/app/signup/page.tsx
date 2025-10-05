@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Leaf } from "lucide-react";
+import { BlockchainBackground } from "@/components/BlockchainBackground";
 
 type Tab = "phone" | "verification" | "profile";
 
@@ -38,8 +39,9 @@ export default function SignupPage() {
     }
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] p-4">
-      <Card className="w-full max-w-lg mx-auto">
+    <div className="relative flex items-center justify-center min-h-[calc(100vh-4rem)] p-4">
+      <BlockchainBackground />
+      <Card className="w-full max-w-lg mx-auto z-10 bg-card/80 backdrop-blur-sm">
         <CardHeader className="text-center">
             <Leaf className="mx-auto h-10 w-10 text-primary mb-2" />
             <CardTitle className="text-2xl font-headline">Join AgriChain Connect</CardTitle>
