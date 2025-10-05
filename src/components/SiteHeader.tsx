@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Leaf, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 function Logo() {
   return (
@@ -43,6 +44,7 @@ export function SiteHeader() {
                 <span className="sr-only">Cart</span>
               </Link>
             </Button>
+             <ThemeToggle />
             <div className="hidden md:flex items-center space-x-2">
               <Button asChild variant="ghost">
                   <Link href="/login">

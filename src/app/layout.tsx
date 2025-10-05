@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import { ProductProvider } from "@/context/ProductContext";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -45,16 +46,23 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <ProductProvider>
-          <CartProvider>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <main className="flex-1">{children}</main>
-              <SiteFooter />
-            </div>
-            <Toaster />
-          </CartProvider>
-        </ProductProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ProductProvider>
+            <CartProvider>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <main className="flex-1">{children}</main>
+                <SiteFooter />
+              </div>
+              <Toaster />
+            </CartProvider>
+          </ProductProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
