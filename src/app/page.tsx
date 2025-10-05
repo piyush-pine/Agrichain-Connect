@@ -194,6 +194,26 @@ export default function HomePage() {
             </div>
         </div>
       </section>
+
+      <section className="bg-primary text-primary-foreground py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">
+            Ready to transform agricultural supply chains?
+          </h2>
+          <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
+            Join AgriChain today and be part of the movement towards
+            transparency, fairness, and efficiency in Indian agriculture.
+          </p>
+          <Button
+            asChild
+            size="lg"
+            variant="secondary"
+            className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+          >
+            <Link href="/signup">Get Started for Free</Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
