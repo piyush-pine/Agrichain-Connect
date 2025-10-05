@@ -16,18 +16,24 @@ import QRCode from "react-qr-code";
 import Link from 'next/link';
 
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const { toast } = useToast();
   const { addToCart } = useCart();
   const { products } = useProducts();
   const [quantity, setQuantity] = useState(1);
 
-  const product = products.find((p) => p.slug === params.slug);
+  const product = products.find((p) => p.slug === slug);
 
   if (!product) {
-    // We need to wait for products to load from context
-    // This is a simple loading state. In a real app, you'd use a skeleton loader.
+    // In a real app, you might want to fetch the product if it's not in the context
+    // For this demo, if it's not found in the initial product list, we show a 404.
+    // We also check if products are loaded yet.
+    if (products.length > 0) {
+        notFound();
+    }
+    
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 text-center">
         <p>Loading product...</p>
       </div>
     );
