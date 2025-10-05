@@ -6,7 +6,7 @@ export interface Farmer {
   rating: number;
 }
 
-export type ProductCategory = 'Vegetable' | 'Fruit' | 'Grain' | 'Dairy';
+export type ProductCategory = 'Vegetable' | 'Fruit' | 'Grain' | 'Dairy' | 'Other';
 
 export interface Product {
   id: string;

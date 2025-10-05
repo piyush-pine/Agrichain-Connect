@@ -172,6 +172,7 @@ export default function NewProductPage() {
                     <SelectItem value="Fruit">Fruit</SelectItem>
                     <SelectItem value="Grain">Grain</SelectItem>
                     <SelectItem value="Dairy">Dairy</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
