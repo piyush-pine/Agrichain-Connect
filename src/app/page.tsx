@@ -172,7 +172,7 @@ export default function HomePage() {
                 />
                 <FeatureCard
                     icon={Radar}
-                    title="IoT Monitoring"
+                    title="IoT Monitoring (in future)"
                     description="Real-time monitoring of product conditions (temperature, humidity) throughout the supply chain journey."
                 />
                 <FeatureCard
