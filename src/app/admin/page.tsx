@@ -199,12 +199,14 @@ export default function AdminDashboardPage() {
                             <AlertDialogContent>
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>Investigate Fraud Alert</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        <p>Product: <span className="font-semibold">{alert.product}</span></p>
-                                        <p>Seller: <span className="font-semibold">{alert.seller}</span></p>
-                                        <p>Reason: <span className="font-semibold">{alert.reason}</span></p>
-                                        <p>Confidence: <span className="font-semibold">{(alert.score * 100).toFixed(0)}%</span></p>
-                                        <p className="mt-2">Take action on this listing.</p>
+                                    <AlertDialogDescription asChild>
+                                        <div className="space-y-1">
+                                            <div>Product: <span className="font-semibold">{alert.product}</span></div>
+                                            <div>Seller: <span className="font-semibold">{alert.seller}</span></div>
+                                            <div>Reason: <span className="font-semibold">{alert.reason}</span></div>
+                                            <div>Confidence: <span className="font-semibold">{(alert.score * 100).toFixed(0)}%</span></div>
+                                            <div className="pt-2">Take action on this listing.</div>
+                                        </div>
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
@@ -236,3 +238,5 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+
+    
