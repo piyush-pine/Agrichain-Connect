@@ -30,7 +30,8 @@ function InfoRow({ label, value, isHash = false }: { label: string, value: strin
     );
 }
 
-export default function TransactionDetailPage({ params: { txHash } }: { params: { txHash: string } }) {
+export default function TransactionDetailPage({ params }: { params: { txHash: string } }) {
+    const { txHash } = params;
     const blockNumber = Math.floor(Math.random() * 1000000) + 50000000;
     const timestamp = `${Math.floor(Math.random() * 59)} secs ago (${new Date().toUTCString()})`;
     const fromAddress = `0x${[...Array(40)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`;

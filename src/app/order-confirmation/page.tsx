@@ -1,28 +1,27 @@
 
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { CheckCircle, Package, Link as LinkIcon, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
-function OrderConfirmationContent() {
-    const searchParams = useSearchParams();
+function OrderConfirmationContent({ txHash }: { txHash: string | null }) {
     const router = useRouter();
-    const txHash = searchParams.get('tx');
 
-    if (!txHash) {
-        // In a real app you might want a more robust handling
-        if (typeof window !== 'undefined') {
+    useEffect(() => {
+        if (!txHash) {
             router.replace('/');
         }
-        return null;
+    }, [txHash, router]);
+
+    if (!txHash) {
+        return <OrderConfirmationSkeleton />;
     }
 
-    const shortTxHash = txHash ? `${txHash.slice(0, 6)}...${txHash.slice(-4)}` : 'N/A';
+    const shortTxHash = `${txHash.slice(0, 6)}...${txHash.slice(-4)}`;
 
   return (
     <Card className="w-full max-w-2xl text-center p-8">
@@ -94,11 +93,13 @@ function OrderConfirmationSkeleton() {
     )
 }
 
-export default function OrderConfirmationPage() {
+export default function OrderConfirmationPage({ searchParams }: { searchParams: { tx: string } }) {
+  const txHash = searchParams?.tx;
+
   return (
     <div className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-8rem)]">
         <Suspense fallback={<OrderConfirmationSkeleton />}>
-            <OrderConfirmationContent />
+            <OrderConfirmationContent txHash={txHash} />
         </Suspense>
     </div>
   );
