@@ -1,0 +1,61 @@
+
+{
+  "home": {
+    "hero": {
+      "badge": "Blockchain-Powered Agriculture",
+      "title": "Transparent Supply Chain for Indian Agriculture",
+      "subtitle": "AgriChain leverages blockchain technology to create a fair, transparent, and efficient agricultural supply chain ecosystem connecting farmers directly with buyers.",
+      "getStarted": "Get Started",
+      "watchDemo": "Watch Demo"
+    },
+    "stats": {
+      "transactions": "Live Transactions",
+      "farmers": "Active Farmers",
+      "products": "Products Listed",
+      "buyers": "Verified Buyers",
+      "verified": "Blockchain Verified",
+      "immutable": "Immutable records"
+    },
+    "roles": {
+      "title": "For Everyone in the Supply Chain",
+      "subtitle": "Choose your role to get started",
+      "farmers": "Farmers & MSMEs",
+      "buyers": "Buyers",
+      "logistics": "Logistics",
+      "admins": "Admins"
+    },
+    "features": {
+      "title": "Powerful Features",
+      "subtitle": "AgriChain combines cutting-edge technologies to revolutionize agricultural supply chains",
+      "provenance": {
+        "title": "Blockchain Provenance",
+        "description": "Every transaction and product movement is recorded on an immutable blockchain ledger ensuring complete transparency."
+      },
+      "iot": {
+        "title": "IoT Monitoring (in future)",
+        "description": "Real-time monitoring of product conditions (temperature, humidity) throughout the supply chain journey."
+      },
+      "contracts": {
+        "title": "Smart Contracts",
+        "description": "Automated escrow payments and quality verification through tamper-proof smart contracts."
+      },
+      "fraud": {
+        "title": "AI Fraud Detection",
+        "description": "Machine learning algorithms monitor transactions for anomalies and potential fraud."
+      },
+      "voice": {
+        "title": "Voice Interface (in future)",
+        "description": "Voice commands and multilingual support for farmers with limited digital literacy."
+      },
+      "rewards": {
+        "title": "Sustainability Rewards",
+        "description": "Farmers earn tokens for sustainable practices that can be redeemed for benefits."
+      }
+    },
+    "cta": {
+      "title": "Ready to transform agricultural supply chains?",
+      "subtitle": "Join AgriChain today and be part of the movement towards transparency, fairness, and efficiency in Indian agriculture.",
+      "getStarted": "Get Started for Free"
+    }
+  }
+}
