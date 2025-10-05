@@ -12,9 +12,9 @@
 
 .dot {
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background-color: hsl(var(--primary) / 0.3);
+    width: 6px;
+    height: 6px;
+    background-color: hsl(var(--primary) / 0.4);
     border-radius: 50%;
     animation: move 20s linear infinite;
     will-change: transform;
@@ -46,6 +46,22 @@
 .dot-13 { top: 5%; left: 95%; animation-delay: -14s; animation-duration: 19s; }
 .dot-14 { top: 95%; left: 2%; animation-delay: -13s; animation-duration: 25s; }
 .dot-15 { top: 55%; left: 5%; animation-delay: -15s; animation-duration: 20s; }
+.dot-16 { top: 25%; left: 5%; animation-delay: -16s; animation-duration: 29s; }
+.dot-17 { top: 80%; left: 25%; animation-delay: -17s; animation-duration: 17s; }
+.dot-18 { top: 65%; left: 75%; animation-delay: -18s; animation-duration: 24s; }
+.dot-19 { top: 35%; left: 85%; animation-delay: -19s; animation-duration: 20s; }
+.dot-20 { top: 2%; left: 30%; animation-delay: -20s; animation-duration: 26s; }
+.dot-21 { top: 98%; left: 70%; animation-delay: -21s; animation-duration: 18s; }
+.dot-22 { top: 45%; left: 35%; animation-delay: -22s; animation-duration: 25s; }
+.dot-23 { top: 88%; left: 55%; animation-delay: -23s; animation-duration: 21s; }
+.dot-24 { top: 18%; left: 88%; animation-delay: -24s; animation-duration: 23s; }
+.dot-25 { top: 78%; left: 8%; animation-delay: -25s; animation-duration: 27s; }
+.dot-26 { top: 58%; left: 45%; animation-delay: -26s; animation-duration: 19s; }
+.dot-27 { top: 8%; left: 65%; animation-delay: -27s; animation-duration: 28s; }
+.dot-28 { top: 38%; left: 12%; animation-delay: -28s; animation-duration: 22s; }
+.dot-29 { top: 68%; left: 95%; animation-delay: -29s; animation-duration: 20s; }
+.dot-30 { top: 92%; left: 40%; animation-delay: -30s; animation-duration: 25s; }
+
 
 
 @keyframes move {
@@ -71,3 +87,18 @@
 .dot-13 { --dx: 22; --dy: 12; }
 .dot-14 { --dx: -15; --dy: -30; }
 .dot-15 { --dx: 28; --dy: 18; }
+.dot-16 { --dx: -22; --dy: -12; }
+.dot-17 { --dx: 12; --dy: -28; }
+.dot-18 { --dx: -30; --dy: 15; }
+.dot-19 { --dx: 26; --dy: -8; }
+.dot-20 { --dx: -14; --dy: 24; }
+.dot-21 { --dx: 19; --dy: -19; }
+.dot-22 { --dx: -24; --dy: 26; }
+.dot-23 { --dx: 16; --dy: -20; }
+.dot-24 { --dx: -20; --dy: -14; }
+.dot-25 { --dx: 29; --dy: 11; }
+.dot-26 { --dx: -11; --dy: 29; }
+.dot-27 { --dx: 14; --dy: -27; }
+.dot-28 { --dx: -27; --dy: -16; }
+.dot-29 { --dx: 23; --dy: 23; }
+.dot-30 { --dx: -19; --dy: 19; }
