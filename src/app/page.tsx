@@ -18,13 +18,26 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 function StatCard({ title, value }: { title: string; value: string }) {
+  const initialValue = parseInt(value.replace(/,/g, ''), 10);
+  const [count, setCount] = useState(initialValue);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1500); // Increment every 1.5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <Card className="bg-white/80 backdrop-blur-sm shadow-lg">
       <CardContent className="p-4">
         <p className="text-sm text-muted-foreground">{title}</p>
-        <p className="text-2xl font-bold text-primary">{value}</p>
+        <p className="text-2xl font-bold text-primary">{count.toLocaleString()}</p>
       </CardContent>
     </Card>
   );
