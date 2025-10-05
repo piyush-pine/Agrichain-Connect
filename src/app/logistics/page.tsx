@@ -157,9 +157,11 @@ export default function LogisticsDashboardPage() {
                         <CardTitle>Real-Time Map</CardTitle>
                         <CardDescription>Live locations of in-transit shipments.</CardDescription>
                     </CardHeader>
-                    <CardContent className="p-0 relative h-[250px] bg-muted/50 dark:bg-muted/30 flex items-center justify-center">
-                        <Image src="/map-placeholder.png" alt="Map of shipments" layout="fill" objectFit="cover" className="rounded-b-lg opacity-50 dark:opacity-20" />
-                        <p className='z-10 font-medium text-muted-foreground'>Map Placeholder</p>
+                    <CardContent className="p-0 relative h-[250px] bg-muted/50 dark:bg-muted/30">
+                        <Image src="https://picsum.photos/seed/map/800/600" alt="Map of shipments" layout="fill" objectFit="cover" className="rounded-b-lg opacity-50 dark:opacity-20" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <p className='z-10 font-medium text-muted-foreground bg-background/50 backdrop-blur-sm px-4 py-2 rounded-lg'>Live Map Coming Soon</p>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
