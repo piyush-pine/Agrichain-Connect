@@ -71,7 +71,7 @@ export function SiteHeader() {
             Marketplace
           </Link>
           <Link
-            href="#"
+            href="/how-it-works"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             How It Works
