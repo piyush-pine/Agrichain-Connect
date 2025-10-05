@@ -27,7 +27,6 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   if (!product) {
     // In a real app, you might want to fetch the product if it's not in the context
     // For this demo, if it's not found in the initial product list, we show a 404.
-    // We also check if products are loaded yet.
     if (products.length > 0) {
         notFound();
     }
@@ -54,7 +53,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        {/* Left Column: Image & IoT Data */}
+        {/* Left Column: Image */}
         <div>
           <Card className="overflow-hidden">
             <Image
@@ -66,26 +65,6 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
               data-ai-hint={product.imageHint}
             />
           </Card>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-              <Card>
-                  <CardHeader className="pb-2">
-                      <CardDescription className="flex items-center gap-2 text-sm"><Thermometer size={16}/> Temperature</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                      <p className="text-xl font-bold">4.5°C</p>
-                      <p className="text-xs text-muted-foreground">Optimal cold chain</p>
-                  </CardContent>
-              </Card>
-               <Card>
-                  <CardHeader className="pb-2">
-                      <CardDescription className="flex items-center gap-2 text-sm"><Droplets size={16}/> Humidity</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                      <p className="text-xl font-bold">85%</p>
-                       <p className="text-xs text-muted-foreground">Maintained for freshness</p>
-                  </CardContent>
-              </Card>
-          </div>
         </div>
 
         {/* Right Column: Details */}
