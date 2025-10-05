@@ -115,7 +115,7 @@ export default function LogisticsDashboardPage() {
                                 : shipment.status === 'Delayed' ? 'destructive'
                                 : 'outline'
                             }
-                            className={`${shipment.status === 'Delivered' ? 'bg-green-100 text-green-800' : ''} ${shipment.status === 'In Transit' ? 'bg-blue-100 text-blue-800' : ''}`}
+                            className={`${shipment.status === 'Delivered' ? 'bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-200' : ''} ${shipment.status === 'In Transit' ? 'bg-blue-100 text-blue-800 dark:bg-blue-800/20 dark:text-blue-200' : ''}`}
                             >
                             {shipment.status}
                             </Badge>
@@ -157,8 +157,9 @@ export default function LogisticsDashboardPage() {
                         <CardTitle>Real-Time Map</CardTitle>
                         <CardDescription>Live locations of in-transit shipments.</CardDescription>
                     </CardHeader>
-                    <CardContent className="p-0 relative h-[250px]">
-                        <Image src="/map-placeholder.png" alt="Map of shipments" layout="fill" objectFit="cover" className="rounded-b-lg" />
+                    <CardContent className="p-0 relative h-[250px] bg-muted/50 dark:bg-muted/30 flex items-center justify-center">
+                        <Image src="/map-placeholder.png" alt="Map of shipments" layout="fill" objectFit="cover" className="rounded-b-lg opacity-50 dark:opacity-20" />
+                        <p className='z-10 font-medium text-muted-foreground'>Map Placeholder</p>
                     </CardContent>
                 </Card>
             </div>

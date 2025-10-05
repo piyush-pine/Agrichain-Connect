@@ -82,7 +82,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
               </span>
             </p>
             {product.blockchainVerified && (
-                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+                <Badge className="bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-800/30 dark:text-green-200 dark:hover:bg-green-800/40">
                     <ShieldCheck size={16} className="mr-2"/>
                     Blockchain Verified
                 </Badge>

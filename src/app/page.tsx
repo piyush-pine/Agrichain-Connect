@@ -34,7 +34,7 @@ function StatCard({ title, value }: { title: string; value: string }) {
 
 
   return (
-    <Card className="bg-white/80 backdrop-blur-sm shadow-lg">
+    <Card className="bg-card/80 backdrop-blur-sm shadow-lg">
       <CardContent className="p-4">
         <p className="text-sm text-muted-foreground">{title}</p>
         <p className="text-2xl font-bold text-primary">{count.toLocaleString()}</p>
@@ -78,7 +78,7 @@ function FeatureCard({
   return (
     <Card className="p-6 text-left transition-all hover:shadow-lg hover:-translate-y-1">
         <div className="flex items-center gap-4">
-            <div className="bg-green-100 p-3 rounded-lg">
+            <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
                 <Icon className="h-6 w-6 text-primary" />
             </div>
             <div>
@@ -98,7 +98,7 @@ export default function HomePage() {
     <div className="bg-background">
       <section className="relative py-20 md:py-32">
         <div
-          className="absolute inset-0 bg-gradient-to-br from-green-100/50 to-green-200/30"
+          className="absolute inset-0 bg-gradient-to-br from-green-100/50 to-green-200/30 dark:from-green-900/10 dark:to-green-900/20"
           style={{
             clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)',
           }}
@@ -106,7 +106,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 relative">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="text-center md:text-left">
-              <span className="inline-block bg-green-200 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">
+              <span className="inline-block bg-green-200 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-4 dark:bg-green-800/30 dark:text-green-200">
                 Blockchain-Powered Agriculture
               </span>
               <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-foreground">
@@ -136,7 +136,7 @@ export default function HomePage() {
                 <StatCard title="Products Listed" value="4,892" />
                 <StatCard title="Verified Buyers" value="3,124" />
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-white shadow-lg rounded-full p-3 flex items-center gap-2 text-sm">
+              <div className="absolute -bottom-4 -right-4 bg-card shadow-lg rounded-full p-3 flex items-center gap-2 text-sm">
                   <ShieldCheck className="h-6 w-6 text-green-500"/>
                   <div>
                     <p className="font-semibold">Blockchain Verified</p>
@@ -159,15 +159,15 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <RoleCard icon={User} title="Farmers & MSMEs" bgColor="bg-green-50" href="/dashboard"/>
-            <RoleCard icon={Box} title="Buyers" bgColor="bg-blue-50" href="/products" />
-            <RoleCard icon={Truck} title="Logistics" bgColor="bg-orange-50" href="/logistics" />
-            <RoleCard icon={UserCog} title="Admins" bgColor="bg-purple-50" href="/admin" />
+            <RoleCard icon={User} title="Farmers & MSMEs" bgColor="bg-green-50 dark:bg-green-900/20" href="/dashboard"/>
+            <RoleCard icon={Box} title="Buyers" bgColor="bg-blue-50 dark:bg-blue-900/20" href="/products" />
+            <RoleCard icon={Truck} title="Logistics" bgColor="bg-orange-50 dark:bg-orange-900/20" href="/logistics" />
+            <RoleCard icon={UserCog} title="Admins" bgColor="bg-purple-50 dark:bg-purple-900/20" href="/admin" />
           </div>
         </div>
       </section>
 
-      <section className="py-20 md:py-24 bg-gray-50">
+      <section className="py-20 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold font-headline">

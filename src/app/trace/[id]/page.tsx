@@ -22,7 +22,7 @@ export default function TracePage({ params }: { params: { id: string } }) {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-muted/20 min-h-screen">
             <div className="container mx-auto px-4 py-8">
                  <div className="max-w-4xl mx-auto">
                     <header className="text-center mb-8">
@@ -37,7 +37,7 @@ export default function TracePage({ params }: { params: { id: string } }) {
                                     <CardTitle className='text-2xl'>{product.name}</CardTitle>
                                     <CardDescription>Product ID: {product.id}</CardDescription>
                                 </div>
-                                 <Badge className="bg-green-100 text-green-800 hover:bg-green-200 text-base">
+                                 <Badge className="bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-800/30 dark:text-green-200 dark:hover:bg-green-800/40 text-base">
                                     <ShieldCheck size={16} className="mr-2"/>
                                     Verified on Blockchain
                                 </Badge>

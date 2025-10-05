@@ -40,7 +40,7 @@ export function ProductCard({ product }: ProductCardProps) {
             data-ai-hint={product.imageHint}
           />
           {product.blockchainVerified && (
-            <Badge className="absolute top-2 right-2 bg-green-100 text-green-800 hover:bg-green-200">
+            <Badge className="absolute top-2 right-2 bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-800/30 dark:text-green-200 dark:hover:bg-green-800/40">
               <ShieldCheck size={14} className="mr-1" />
               Verified
             </Badge>
