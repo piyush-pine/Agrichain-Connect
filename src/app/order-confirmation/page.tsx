@@ -43,14 +43,12 @@ export default function OrderConfirmationPage() {
                  </p>
                  <p className="flex justify-between items-center">
                     <span className="font-semibold">Blockchain Transaction:</span>
-                    <a 
-                        href={`https://mumbai.polygonscan.com/tx/${txHash}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                    <Link
+                        href={`/tx/${txHash}`} 
                         className="flex items-center gap-1 text-primary hover:underline"
                     >
                         {shortTxHash} <LinkIcon size={14} />
-                    </a>
+                    </Link>
                  </p>
                  <p className="text-xs text-muted-foreground pt-2">
                     Your payment is locked in our `EscrowPayment.sol` smart contract. Funds will be automatically released to the farmer upon successful delivery, verified by our `IoTConditionRegistry.sol` for quality assurance.

@@ -135,9 +135,9 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                     <div>
                         <p className="text-sm text-muted-foreground">Scan this QR code or <Link href={`/trace/${product.id}`} className="text-primary underline">click here</Link> to view the full supply chain journey of this product, immutably recorded on the blockchain.</p>
                         {product.txHash && (
-                             <a href={`https://mumbai.polygonscan.com/tx/${product.txHash}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-blue-500 hover:underline mt-2">
+                             <Link href={`/tx/${product.txHash}`} className="flex items-center gap-1 text-xs text-blue-500 hover:underline mt-2">
                                 <LinkIcon size={12} /> View Creation Transaction
-                            </a>
+                            </Link>
                         )}
                     </div>
                 </CardContent>

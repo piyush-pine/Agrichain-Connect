@@ -129,8 +129,8 @@ export default function NewProductPage() {
                 description: (
                     <div className="flex flex-col gap-2">
                         <span>{productName} is now available for sale.</span>
-                        <a href={`https://mumbai.polygonscan.com/tx/${txHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-xs">
-                            View on PolygonScan
+                        <a href={`/tx/${txHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-xs">
+                            View on Explorer
                         </a>
                     </div>
                 ),

@@ -18,7 +18,7 @@ const mockOrderDetails = {
         { name: 'Himachali Apples', quantity: 10, price: 4.20 },
     ],
     shippingAddress: '456 Tech Park, Mumbai, India 400051',
-    txHash: '0x456...def'
+    txHash: '0x456def'
 };
 
 const initialSteps = [
@@ -179,9 +179,9 @@ export default function OrderTrackingPage({ params }: { params: { orderId: strin
                     </div>
                      <Separator className="my-4" />
                     <Button asChild variant="outline" className="w-full">
-                        <a href={`https://mumbai.polygonscan.com/tx/${order.txHash}`} target="_blank" rel="noopener noreferrer">
-                            <LinkIcon className="mr-2 h-4 w-4" /> View on PolygonScan
-                        </a>
+                        <Link href={`/tx/${order.txHash}`}>
+                            <LinkIcon className="mr-2 h-4 w-4" /> View on Explorer
+                        </Link>
                     </Button>
                 </CardContent>
             </Card>
