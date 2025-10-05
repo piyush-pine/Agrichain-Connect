@@ -34,18 +34,22 @@ function RoleCard({
   icon: Icon,
   title,
   bgColor,
+  href,
 }: {
   icon: React.ElementType;
   title: string;
   bgColor: string;
+  href: string;
 }) {
   return (
-    <Card
-      className={`text-center p-8 transition-all hover:shadow-xl hover:-translate-y-1 ${bgColor}`}
-    >
-      <Icon className="h-12 w-12 mx-auto mb-4 text-primary" />
-      <h3 className="text-lg font-semibold">{title}</h3>
-    </Card>
+    <Link href={href}>
+        <Card
+        className={`text-center p-8 transition-all hover:shadow-xl hover:-translate-y-1 ${bgColor} h-full`}
+        >
+        <Icon className="h-12 w-12 mx-auto mb-4 text-primary" />
+        <h3 className="text-lg font-semibold">{title}</h3>
+        </Card>
+    </Link>
   );
 }
 
@@ -142,10 +146,10 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <RoleCard icon={User} title="Farmers & MSMEs" bgColor="bg-green-50" />
-            <RoleCard icon={Box} title="Buyers" bgColor="bg-blue-50" />
-            <RoleCard icon={Truck} title="Logistics" bgColor="bg-orange-50" />
-            <RoleCard icon={UserCog} title="Admins" bgColor="bg-purple-50" />
+            <RoleCard icon={User} title="Farmers & MSMEs" bgColor="bg-green-50" href="/dashboard"/>
+            <RoleCard icon={Box} title="Buyers" bgColor="bg-blue-50" href="/products" />
+            <RoleCard icon={Truck} title="Logistics" bgColor="bg-orange-50" href="/logistics" />
+            <RoleCard icon={UserCog} title="Admins" bgColor="bg-purple-50" href="/admin" />
           </div>
         </div>
       </section>
