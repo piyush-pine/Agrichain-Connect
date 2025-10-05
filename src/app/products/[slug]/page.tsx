@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ShieldCheck, Star, Thermometer, Droplets, ShoppingCart } from "lucide-react";
+import { ShieldCheck, Star, Thermometer, Droplets, ShoppingCart, QrCode } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import QRCode from "react-qr-code";
+import Link from 'next/link';
 
 export default function ProductDetailPage({ params }: { params: { slug: string } }) {
   const { toast } = useToast();
@@ -41,10 +43,12 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
     });
   };
 
+  const traceUrl = typeof window !== 'undefined' ? `${window.location.origin}/trace/${product.id}` : '';
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        {/* Left Column: Image */}
+        {/* Left Column: Image & IoT Data */}
         <div>
           <Card className="overflow-hidden">
             <Image
@@ -56,7 +60,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
               data-ai-hint={product.imageHint}
             />
           </Card>
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               <Card>
                   <CardHeader className="pb-2">
                       <CardDescription className="flex items-center gap-2 text-sm"><Thermometer size={16}/> Temperature</CardDescription>
@@ -131,6 +135,28 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                 </div>
             </CardContent>
           </Card>
+
+           <Card className="mb-6 bg-muted/40">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-base">
+                        <QrCode />
+                        Product Provenance
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col sm:flex-row items-center gap-4">
+                     <div className="bg-white p-2 rounded-md">
+                        {traceUrl && <QRCode value={traceUrl} size={80} />}
+                    </div>
+                    <div>
+                        <p className="text-sm text-muted-foreground">Scan this QR code or <Link href={`/trace/${product.id}`} className="text-primary underline">click here</Link> to view the full supply chain journey of this product, immutably recorded on the blockchain.</p>
+                        {product.txHash && (
+                             <a href={`https://mumbai.polygonscan.com/tx/${product.txHash}`} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline mt-2 block">
+                                View Creation Transaction
+                            </a>
+                        )}
+                    </div>
+                </CardContent>
+            </Card>
           
           <Separator className="my-6" />
 

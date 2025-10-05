@@ -10,12 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Wand2, Upload } from "lucide-react";
+import { Wand2, Upload, ShieldCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { generateProductDescription } from '@/ai/flows/generate-product-description';
 import { useProducts } from '@/context/ProductContext';
 import { mockFarmers } from '@/lib/data';
 import type { ProductCategory } from '@/lib/types';
+import QRCode from "react-qr-code";
+
 
 export default function NewProductPage() {
     const { toast } = useToast();
@@ -94,14 +96,17 @@ export default function NewProductPage() {
         setIsSubmitting(true);
 
         toast({
-            title: 'Submitting...',
-            description: 'Listing your new product on the marketplace.',
+            title: 'Submitting to Blockchain...',
+            description: 'Creating immutable product record on Polygon.',
         });
 
-        // Simulate form submission
+        // Simulate form submission & blockchain transaction
         setTimeout(() => {
+            const productId = `prod-${Date.now()}`;
+            const txHash = `0x${[...Array(64)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')}`;
+
             const newProduct = {
-                id: `prod-${Date.now()}`,
+                id: productId,
                 slug: productName.toLowerCase().replace(/\s+/g, '-'),
                 name: productName,
                 description: description,
@@ -110,20 +115,28 @@ export default function NewProductPage() {
                 farmer: mockFarmers[0], // Assuming the first farmer is the current user
                 imageUrl: imagePreview,
                 imageHint: productName,
-                blockchainVerified: false, // Default to not verified
+                blockchainVerified: true, // Verified on creation
                 sustainabilityTags: keywords.split(',').map(k => k.trim()).filter(Boolean),
                 stock: parseInt(stock),
+                txHash: txHash,
             };
 
             addProduct(newProduct);
 
             setIsSubmitting(false);
             toast({
-                title: 'Product Listed!',
-                description: `${productName} is now available for sale.`,
+                title: 'Product Listed & Verified!',
+                description: (
+                    <div className="flex flex-col gap-2">
+                        <span>{productName} is now available for sale.</span>
+                        <a href={`https://mumbai.polygonscan.com/tx/${txHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-xs">
+                            View on PolygonScan
+                        </a>
+                    </div>
+                ),
             });
             router.push('/dashboard/products');
-        }, 1500);
+        }, 2000);
     };
 
   return (
@@ -132,7 +145,7 @@ export default function NewProductPage() {
         <CardHeader>
           <CardTitle>List a New Product</CardTitle>
           <CardDescription>
-            Fill in the details below to add a new product to the marketplace.
+            Fill in the details below to add a new product to the marketplace. Your product will be registered on the blockchain.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -175,7 +188,7 @@ export default function NewProductPage() {
                 onChange={(e) => setKeywords(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                Enter comma-separated keywords for AI description generation.
+                Enter comma-separated keywords for AI description generation. These will also be used as sustainability tags.
               </p>
             </div>
             
@@ -247,7 +260,12 @@ export default function NewProductPage() {
             <div className="flex justify-end gap-4">
                 <Button variant="outline" type="button" onClick={() => router.push('/dashboard/products')}>Cancel</Button>
                 <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Listing Product...' : 'List Product'}
+                    {isSubmitting ? 'Listing Product...' : (
+                        <>
+                            <ShieldCheck className="mr-2 h-4 w-4" />
+                            List & Verify on Blockchain
+                        </>
+                    )}
                 </Button>
             </div>
           </form>

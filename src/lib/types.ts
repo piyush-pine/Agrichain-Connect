@@ -21,6 +21,7 @@ export interface Product {
   blockchainVerified: boolean;
   sustainabilityTags: string[];
   stock: number;
+  txHash?: string;
 }
 
 export interface CartItem {
