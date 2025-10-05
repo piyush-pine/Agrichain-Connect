@@ -1,157 +1,112 @@
 
 'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import {
-  ArrowRight,
-  Carrot,
-  Leaf,
-  ShieldCheck,
-  Search,
-  ChevronDown,
-} from "lucide-react";
+import { PlayCircle, ShieldCheck, User, Box, Truck, UserCog } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import Link from 'next/link';
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { useProducts } from "@/context/ProductContext";
-import { Product } from "@/lib/types";
-
-function ProductCard({ product }: { product: Product }) {
+function StatCard({ title, value }: { title: string; value: string }) {
   return (
-    <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      <CardHeader className="p-0">
-        <Link href={`/products/${product.slug}`} className="block">
-          <Image
-            src={product.imageUrl}
-            alt={product.name}
-            width={400}
-            height={300}
-            className="w-full h-48 object-cover"
-            data-ai-hint={product.imageHint}
-          />
-        </Link>
-      </CardHeader>
-      <CardContent className="p-4 flex-grow">
-        <Badge variant="secondary" className="mb-2">
-          {product.category}
-        </Badge>
-        <CardTitle className="text-lg font-headline mb-1">
-          <Link href={`/products/${product.slug}`}>{product.name}</Link>
-        </CardTitle>
-        <CardDescription className="text-sm text-muted-foreground">
-          From {product.farmer.name}
-        </CardDescription>
+    <Card className="bg-white/80 backdrop-blur-sm shadow-lg">
+      <CardContent className="p-4">
+        <p className="text-sm text-muted-foreground">{title}</p>
+        <p className="text-2xl font-bold text-primary">{value}</p>
       </CardContent>
-      <CardFooter className="p-4 flex justify-between items-center">
-        <p className="text-xl font-bold font-headline text-primary">
-          ${product.price.toFixed(2)}
-          <span className="text-sm font-normal text-muted-foreground">
-            /kg
-          </span>
-        </p>
-        {product.blockchainVerified && (
-          <div className="flex items-center gap-1 text-green-600">
-            <ShieldCheck size={16} />
-            <span className="text-xs font-medium">Verified</span>
-          </div>
-        )}
-      </CardFooter>
     </Card>
   );
 }
 
-export default function MarketplacePage() {
-  const { products } = useProducts();
-
+function RoleCard({
+  icon: Icon,
+  title,
+  bgColor,
+}: {
+  icon: React.ElementType;
+  title: string;
+  bgColor: string;
+}) {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <section className="text-center bg-card rounded-lg p-8 md:p-12 mb-12 shadow-md">
-        <Leaf className="mx-auto h-12 w-12 text-primary mb-4" />
-        <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">
-          Freshness, Direct from the Source
-        </h1>
-        <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-8">
-          AgriChain Connect links you directly with local farmers, ensuring
-          transparent, blockchain-verified quality from farm to table.
-        </p>
-        <div className="flex gap-4 justify-center">
-          <Button asChild size="lg">
-            <Link href="/dashboard/products/new">
-              Become a Seller <ArrowRight className="ml-2" />
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="secondary">
-            <Link href="#products">
-              Explore Produce
-              <Carrot className="ml-2" />
-            </Link>
-          </Button>
-        </div>
-      </section>
+    <Card
+      className={`text-center p-8 transition-all hover:shadow-xl hover:-translate-y-1 ${bgColor}`}
+    >
+      <Icon className="h-12 w-12 mx-auto mb-4 text-primary" />
+      <h3 className="text-lg font-semibold">{title}</h3>
+    </Card>
+  );
+}
 
-      <section id="products" className="scroll-mt-20">
-        <div className="mb-8 p-6 bg-card rounded-lg shadow-sm">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-            <div className="md:col-span-2">
-              <label htmlFor="search" className="text-sm font-medium">What are you looking for?</label>
-              <div className="relative mt-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input id="search" placeholder="Search for tomatoes, apples..." className="pl-10" />
+export default function HomePage() {
+  return (
+    <div className="bg-background">
+      <section className="relative py-20 md:py-32">
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-green-100/50 to-green-200/30"
+          style={{
+            clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)',
+          }}
+        ></div>
+        <div className="container mx-auto px-4 relative">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="text-center md:text-left">
+              <span className="inline-block bg-green-200 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">
+                Blockchain-Powered Agriculture
+              </span>
+              <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-foreground">
+                Transparent Supply Chain for Indian Agriculture
+              </h1>
+              <p className="max-w-2xl mx-auto md:mx-0 text-lg text-muted-foreground mb-8">
+                AgriChain leverages blockchain technology to create a fair,
+                transparent, and efficient agricultural supply chain ecosystem
+                connecting farmers directly with buyers.
+              </p>
+              <div className="flex gap-4 justify-center md:justify-start">
+                <Button asChild size="lg">
+                  <Link href="/signup">Get Started</Link>
+                </Button>
+                <Button asChild size="lg" variant="ghost">
+                  <Link href="#">
+                    <PlayCircle className="mr-2" /> Watch Demo
+                  </Link>
+                </Button>
               </div>
             </div>
-            <div>
-               <label htmlFor="category" className="text-sm font-medium">Category</label>
-              <Select>
-                <SelectTrigger id="category" className="mt-1">
-                  <SelectValue placeholder="All Categories" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="vegetable">Vegetables</SelectItem>
-                  <SelectItem value="fruit">Fruits</SelectItem>
-                  <SelectItem value="grain">Grains</SelectItem>
-                  <SelectItem value="dairy">Dairy</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-               <label htmlFor="sort" className="text-sm font-medium">Sort by</label>
-               <Select>
-                <SelectTrigger id="sort" className="mt-1">
-                  <SelectValue placeholder="Relevance" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="relevance">Relevance</SelectItem>
-                  <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                  <SelectItem value="price-desc">Price: High to Low</SelectItem>
-                  <SelectItem value="newest">Newest</SelectItem>
-                </SelectContent>
-              </Select>
+
+            <div className="relative">
+              <div className="grid grid-cols-2 gap-4">
+                <StatCard title="Live Transactions" value="2,847" />
+                <StatCard title="Active Farmers" value="1,523" />
+                <StatCard title="Products Listed" value="4,892" />
+                <StatCard title="Verified Buyers" value="3,124" />
+              </div>
+              <div className="absolute -bottom-4 -right-4 bg-white shadow-lg rounded-full p-3 flex items-center gap-2 text-sm">
+                  <ShieldCheck className="h-6 w-6 text-green-500"/>
+                  <div>
+                    <p className="font-semibold">Blockchain Verified</p>
+                    <p className="text-xs text-muted-foreground">Immutable records</p>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+      </section>
+
+      <section className="py-20 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold font-headline">
+              For Everyone in the Supply Chain
+            </h2>
+            <p className="text-lg text-muted-foreground mt-4">
+              Choose your role to get started
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <RoleCard icon={User} title="Farmers & MSMEs" bgColor="bg-green-50" />
+            <RoleCard icon={Box} title="Buyers" bgColor="bg-blue-50" />
+            <RoleCard icon={Truck} title="Logistics" bgColor="bg-orange-50" />
+            <RoleCard icon={UserCog} title="Admins" bgColor="bg-purple-50" />
+          </div>
         </div>
       </section>
     </div>

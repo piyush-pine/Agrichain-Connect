@@ -1,6 +1,6 @@
 
 import type { Metadata } from "next";
-import { PT_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import { CartProvider } from "@/context/CartContext";
 import { ProductProvider } from "@/context/ProductContext";
@@ -8,16 +8,15 @@ import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const ptSans = PT_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "700"],
   variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
-  title: "AgriChain Connect",
+  title: "AgriChain | Blockchain-Powered Agriculture",
   description:
-    "A decentralized marketplace connecting farmers and MSMEs directly to consumers.",
+    "A transparent supply chain for Indian agriculture, connecting farmers and buyers directly.",
 };
 
 export default function RootLayout({
@@ -35,14 +34,14 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
       <body
         className={cn(
           "min-h-screen bg-background font-body antialiased",
-          ptSans.variable
+          inter.variable
         )}
       >
         <ProductProvider>
