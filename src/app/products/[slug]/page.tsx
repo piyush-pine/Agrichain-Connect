@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ShieldCheck, Star, Thermometer, Droplets, ShoppingCart, QrCode } from "lucide-react";
+import { ShieldCheck, Star, Thermometer, Droplets, ShoppingCart, QrCode, Link as LinkIcon } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -150,8 +150,8 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                     <div>
                         <p className="text-sm text-muted-foreground">Scan this QR code or <Link href={`/trace/${product.id}`} className="text-primary underline">click here</Link> to view the full supply chain journey of this product, immutably recorded on the blockchain.</p>
                         {product.txHash && (
-                             <a href={`https://mumbai.polygonscan.com/tx/${product.txHash}`} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline mt-2 block">
-                                View Creation Transaction
+                             <a href={`https://mumbai.polygonscan.com/tx/${product.txHash}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-blue-500 hover:underline mt-2">
+                                <LinkIcon size={12} /> View Creation Transaction
                             </a>
                         )}
                     </div>

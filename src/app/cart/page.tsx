@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Trash2, ArrowRight } from 'lucide-react';
 
@@ -17,9 +17,9 @@ export default function CartPage() {
     (acc, item) => acc + item.product.price * item.quantity,
     0
   );
-  const estimatedTax = subtotal * 0.05;
-  const estimatedShipping = cart.length > 0 ? 5.0 : 0.0;
-  const total = subtotal + estimatedTax + estimatedShipping;
+  const estimatedTax = subtotal * 0.09; // 9% GST
+  const logisticsFee = cart.length > 0 ? 50.0 : 0.0;
+  const total = subtotal + estimatedTax + logisticsFee;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -34,7 +34,7 @@ export default function CartPage() {
               Looks like you haven't added anything to your cart yet.
             </p>
             <Button asChild>
-              <Link href="/">Continue Shopping</Link>
+              <Link href="/products">Continue Shopping</Link>
             </Button>
           </CardContent>
         </Card>
@@ -42,6 +42,9 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2">
             <Card>
+                <CardHeader>
+                    <CardTitle>Items in your cart</CardTitle>
+                </CardHeader>
               <CardContent className="p-0">
                 <ul className="divide-y divide-border">
                   {cart.map((item) => (
@@ -99,6 +102,7 @@ export default function CartPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Order Summary</CardTitle>
+                <CardDescription>Review your order before proceeding to secure payment.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -107,12 +111,12 @@ export default function CartPage() {
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Estimated Tax</span>
+                    <span>GST (9%)</span>
                     <span>${estimatedTax.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Estimated Shipping</span>
-                    <span>${estimatedShipping.toFixed(2)}</span>
+                    <span>Logistics Fee</span>
+                    <span>${logisticsFee.toFixed(2)}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-bold text-lg">

@@ -6,14 +6,25 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { CheckCircle, Package, Link as LinkIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function OrderConfirmationPage() {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const txHash = searchParams.get('tx');
+
+    if (!txHash) {
+        // In a real app you might want a more robust handling
+        if (typeof window !== 'undefined') {
+            router.replace('/');
+        }
+        return null;
+    }
+
     const shortTxHash = txHash ? `${txHash.slice(0, 6)}...${txHash.slice(-4)}` : 'N/A';
 
   return (
-    <div className="container mx-auto px-4 py-12 flex items-center justify-center">
+    <div className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-8rem)]">
       <Card className="w-full max-w-2xl text-center p-8">
         <CardHeader>
             <CheckCircle className="mx-auto h-16 w-16 text-green-500 mb-4" />
@@ -24,9 +35,11 @@ export default function OrderConfirmationPage() {
         </CardHeader>
         <CardContent className="space-y-6">
             <div className="bg-muted p-4 rounded-lg text-left space-y-3">
-                 <p className="flex justify-between">
+                 <p className="flex justify-between items-center">
                     <span className="font-semibold">Order Status:</span>
-                    <span>Funds Secured in Escrow</span>
+                    <span className='font-medium text-primary flex items-center gap-2'>
+                        <Lock size={14} /> Funds Secured in Escrow
+                    </span>
                  </p>
                  <p className="flex justify-between items-center">
                     <span className="font-semibold">Blockchain Transaction:</span>
@@ -48,11 +61,11 @@ export default function OrderConfirmationPage() {
                  <Button asChild>
                     <Link href="/dashboard/orders">
                         <Package className="mr-2 h-4 w-4"/>
-                        Track Your Order
+                        View My Orders
                     </Link>
                 </Button>
                 <Button variant="outline" asChild>
-                    <Link href="/">Continue Shopping</Link>
+                    <Link href="/products">Continue Shopping</Link>
                 </Button>
             </div>
         </CardContent>

@@ -12,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowRight, Lock, Loader2, Link as LinkIcon } from 'lucide-react';
+import Link from 'next/link';
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
@@ -22,10 +23,13 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const subtotal = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-  const total = subtotal + subtotal * 0.05 + (cart.length > 0 ? 5.0 : 0.0);
+  const estimatedTax = subtotal * 0.09;
+  const logisticsFee = cart.length > 0 ? 50.0 : 0.0;
+  const total = subtotal + estimatedTax + logisticsFee;
+
 
   const handleConnectWallet = () => {
-    toast({ title: 'Connecting Wallet...', description: 'Please approve the connection in your MetaMask wallet.' });
+    toast({ title: 'Connecting Wallet...', description: 'Please approve the connection in your wallet.' });
     setTimeout(() => {
       setIsWalletConnected(true);
       toast({ title: 'Wallet Connected!', description: 'Your wallet (0x...dEaD) is now connected.' });
@@ -59,7 +63,7 @@ export default function CheckoutPage() {
                 </CardHeader>
                  <CardContent>
                     <p className="text-muted-foreground mb-4">Start shopping to proceed to checkout.</p>
-                    <Button asChild><a href="/">Continue Shopping</a></Button>
+                    <Button asChild><a href="/products">Continue Shopping</a></Button>
                 </CardContent>
             </Card>
         </div>
@@ -127,6 +131,14 @@ export default function CheckoutPage() {
                   <span>Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
+                 <div className="flex justify-between">
+                    <span>GST (9%)</span>
+                    <span>${estimatedTax.toFixed(2)}</span>
+                  </div>
+                   <div className="flex justify-between">
+                    <span>Logistics Fee</span>
+                    <span>${logisticsFee.toFixed(2)}</span>
+                  </div>
                 <Separator />
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
