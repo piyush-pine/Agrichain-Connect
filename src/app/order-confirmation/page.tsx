@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { CheckCircle, Package, Link as LinkIcon } from 'lucide-react';
+import { CheckCircle, Package, Link as LinkIcon, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function OrderConfirmationPage() {
