@@ -187,7 +187,7 @@ export default function HomePage() {
                 />
                 <FeatureCard
                     icon={Mic}
-                    title="Voice Interface"
+                    title="Voice Interface (in future)"
                     description="Voice commands and multilingual support for farmers with limited digital literacy."
                 />
                 <FeatureCard
