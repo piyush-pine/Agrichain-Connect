@@ -9,19 +9,41 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Leaf, Loader2 } from "lucide-react";
+import { Leaf, Loader2, User, ShoppingCart, Truck, UserCog } from "lucide-react";
 import { useToast } from '@/hooks/use-toast';
 
+type LoginStep = 'phone' | 'role';
+type Role = 'farmer' | 'buyer' | 'logistics' | 'admin';
+
 export default function LoginPage() {
-  const [loadingMethod, setLoadingMethod] = useState<'otp' | 'google' | 'aadhaar' | null>(null);
+  const [loadingRole, setLoadingRole] = useState<Role | null>(null);
+  const [step, setStep] = useState<LoginStep>('phone');
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
-  const handleLogin = (method: 'otp' | 'google' | 'aadhaar') => {
-    setLoadingMethod(method);
+  const handleSendOtp = () => {
+    setIsOtpLoading(true);
+    toast({
+      title: 'Sending OTP...',
+      description: 'Please wait a moment.',
+    });
+
+    setTimeout(() => {
+      setIsOtpLoading(false);
+      setStep('role');
+      toast({
+        title: 'OTP Sent!',
+        description: 'Please select your role to continue.',
+      });
+    }, 1000);
+  };
+
+  const handleLogin = (role: Role) => {
+    setLoadingRole(role);
     toast({
       title: 'Logging in...',
-      description: `Authenticating via ${method === 'otp' ? 'OTP' : method.charAt(0).toUpperCase() + method.slice(1)}. Please wait.`,
+      description: `Authenticating as ${role}. Please wait.`,
     });
 
     setTimeout(() => {
@@ -29,7 +51,24 @@ export default function LoginPage() {
         title: 'Login Successful!',
         description: 'Redirecting you to your dashboard.',
       });
-      router.push('/dashboard');
+
+      switch (role) {
+        case 'farmer':
+          router.push('/dashboard');
+          break;
+        case 'buyer':
+          router.push('/products');
+          break;
+        case 'logistics':
+          router.push('/logistics');
+          break;
+        case 'admin':
+          router.push('/admin');
+          break;
+        default:
+          router.push('/');
+          break;
+      }
     }, 1500);
   };
 
@@ -38,37 +77,60 @@ export default function LoginPage() {
       <Card className="w-full max-w-md mx-auto">
         <CardHeader className="text-center">
           <Leaf className="mx-auto h-10 w-10 text-primary mb-2" />
-          <CardTitle className="text-2xl font-headline">Welcome Back</CardTitle>
-          <CardDescription>Enter your phone number to sign in to your account</CardDescription>
+          {step === 'phone' ? (
+            <>
+              <CardTitle className="text-2xl font-headline">Welcome Back</CardTitle>
+              <CardDescription>Enter your phone number to sign in to your account</CardDescription>
+            </>
+          ) : (
+            <>
+              <CardTitle className="text-2xl font-headline">Select Your Role</CardTitle>
+              <CardDescription>Choose how you want to log in to the platform.</CardDescription>
+            </>
+          )}
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input id="phone" type="tel" placeholder="+91 00000 00000" required disabled={!!loadingMethod} />
+          {step === 'phone' ? (
+            <>
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input id="phone" type="tel" placeholder="+91 00000 00000" required disabled={isOtpLoading} />
+                </div>
+                <Button type="button" className="w-full" onClick={handleSendOtp} disabled={isOtpLoading}>
+                  {isOtpLoading ? <Loader2 className="animate-spin" /> : 'Send OTP'}
+                </Button>
+              </div>
+              <Separator className="my-6" />
+              <div className="text-center">
+                 <div className="mt-6 text-center text-sm">
+                    Don't have an account?{" "}
+                    <Link href="/signup" className="underline font-semibold text-primary">
+                    Sign up
+                    </Link>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+                <Button variant="outline" size="lg" className="flex-col h-24" onClick={() => handleLogin('farmer')} disabled={!!loadingRole}>
+                    {loadingRole === 'farmer' ? <Loader2 className="animate-spin" /> : <User />}
+                    <span>Farmer/MSME</span>
+                </Button>
+                 <Button variant="outline" size="lg" className="flex-col h-24" onClick={() => handleLogin('buyer')} disabled={!!loadingRole}>
+                    {loadingRole === 'buyer' ? <Loader2 className="animate-spin" /> : <ShoppingCart />}
+                    <span>Buyer</span>
+                </Button>
+                 <Button variant="outline" size="lg" className="flex-col h-24" onClick={() => handleLogin('logistics')} disabled={!!loadingRole}>
+                    {loadingRole === 'logistics' ? <Loader2 className="animate-spin" /> : <Truck />}
+                    <span>Logistics</span>
+                </Button>
+                 <Button variant="outline" size="lg" className="flex-col h-24" onClick={() => handleLogin('admin')} disabled={!!loadingRole}>
+                    {loadingRole === 'admin' ? <Loader2 className="animate-spin" /> : <UserCog />}
+                    <span>Admin</span>
+                </Button>
             </div>
-            <Button type="button" className="w-full" onClick={() => handleLogin('otp')} disabled={!!loadingMethod}>
-              {loadingMethod === 'otp' ? <Loader2 className="animate-spin" /> : 'Send OTP'}
-            </Button>
-          </div>
-          <Separator className="my-6" />
-          <div className="text-center">
-             <p className="text-sm text-muted-foreground">Or continue with</p>
-             <div className="flex items-center justify-center gap-4 mt-4">
-                <Button variant="outline" className="w-full" onClick={() => handleLogin('google')} disabled={!!loadingMethod}>
-                  {loadingMethod === 'google' ? <Loader2 className="animate-spin" /> : 'Google'}
-                </Button>
-                <Button variant="outline" className="w-full" onClick={() => handleLogin('aadhaar')} disabled={!!loadingMethod}>
-                  {loadingMethod === 'aadhaar' ? <Loader2 className="animate-spin" /> : 'Aadhaar'}
-                </Button>
-             </div>
-          </div>
-          <div className="mt-6 text-center text-sm">
-            Don't have an account?{" "}
-            <Link href="/signup" className="underline font-semibold text-primary">
-              Sign up
-            </Link>
-          </div>
+          )}
         </CardContent>
       </Card>
     </div>
