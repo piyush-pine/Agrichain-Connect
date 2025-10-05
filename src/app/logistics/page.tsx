@@ -158,7 +158,7 @@ export default function LogisticsDashboardPage() {
                         <CardDescription>Live locations of in-transit shipments.</CardDescription>
                     </CardHeader>
                     <CardContent className="p-0 relative h-[250px] bg-muted/50 dark:bg-muted/30">
-                        <Image src="https://picsum.photos/seed/map/800/600" alt="Map of shipments" layout="fill" objectFit="cover" className="rounded-b-lg opacity-50 dark:opacity-20" />
+                        <Image src="https://picsum.photos/seed/worldmap/800/600" alt="Map of shipments" layout="fill" objectFit="cover" className="rounded-b-lg opacity-50 dark:opacity-20" data-ai-hint="world map" />
                         <div className="absolute inset-0 flex items-center justify-center">
                             <p className='z-10 font-medium text-muted-foreground bg-background/50 backdrop-blur-sm px-4 py-2 rounded-lg'>Live Map Coming Soon</p>
                         </div>
