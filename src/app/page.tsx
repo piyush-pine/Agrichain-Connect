@@ -1,9 +1,22 @@
 
 'use client';
 
-import { PlayCircle, ShieldCheck, User, Box, Truck, UserCog } from 'lucide-react';
+import {
+  PlayCircle,
+  ShieldCheck,
+  User,
+  Box,
+  Truck,
+  UserCog,
+  Link as LinkIcon,
+  Radar,
+  FileText,
+  TrendingUp,
+  Mic,
+  Award,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
 function StatCard({ title, value }: { title: string; value: string }) {
@@ -35,6 +48,33 @@ function RoleCard({
     </Card>
   );
 }
+
+function FeatureCard({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+}) {
+  return (
+    <Card className="p-6 text-left transition-all hover:shadow-lg hover:-translate-y-1">
+        <div className="flex items-center gap-4">
+            <div className="bg-green-100 p-3 rounded-lg">
+                <Icon className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+                <h3 className="text-lg font-semibold">{title}</h3>
+            </div>
+        </div>
+        <CardContent className="p-0 pt-4">
+             <p className="text-muted-foreground">{description}</p>
+        </CardContent>
+    </Card>
+  );
+}
+
 
 export default function HomePage() {
   return (
@@ -107,6 +147,51 @@ export default function HomePage() {
             <RoleCard icon={Truck} title="Logistics" bgColor="bg-orange-50" />
             <RoleCard icon={UserCog} title="Admins" bgColor="bg-purple-50" />
           </div>
+        </div>
+      </section>
+
+      <section className="py-20 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold font-headline">
+                    Powerful Features
+                </h2>
+                <p className="text-lg text-muted-foreground mt-4">
+                    AgriChain combines cutting-edge technologies to revolutionize agricultural supply chains
+                </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <FeatureCard
+                    icon={LinkIcon}
+                    title="Blockchain Provenance"
+                    description="Every transaction and product movement is recorded on an immutable blockchain ledger ensuring complete transparency."
+                />
+                <FeatureCard
+                    icon={Radar}
+                    title="IoT Monitoring"
+                    description="Real-time monitoring of product conditions (temperature, humidity) throughout the supply chain journey."
+                />
+                <FeatureCard
+                    icon={FileText}
+                    title="Smart Contracts"
+                    description="Automated escrow payments and quality verification through tamper-proof smart contracts."
+                />
+                <FeatureCard
+                    icon={TrendingUp}
+                    title="AI Fraud Detection"
+                    description="Machine learning algorithms monitor transactions for anomalies and potential fraud."
+                />
+                <FeatureCard
+                    icon={Mic}
+                    title="Voice Interface"
+                    description="Voice commands and multilingual support for farmers with limited digital literacy."
+                />
+                <FeatureCard
+                    icon={Award}
+                    title="Sustainability Rewards"
+                    description="Farmers earn tokens for sustainable practices that can be redeemed for benefits."
+                />
+            </div>
         </div>
       </section>
     </div>
