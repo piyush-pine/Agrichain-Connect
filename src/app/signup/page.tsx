@@ -41,7 +41,7 @@ export default function SignupPage() {
   return (
     <div className="relative flex items-center justify-center min-h-[calc(100vh-4rem)] p-4">
       <BlockchainBackground />
-      <Card className="w-full max-w-lg mx-auto z-10 bg-card/80 backdrop-blur-sm">
+      <Card className="w-full max-w-lg mx-auto z-10 bg-card/80 backdrop-blur-sm border-primary">
         <CardHeader className="text-center">
             <Leaf className="mx-auto h-10 w-10 text-primary mb-2" />
             <CardTitle className="text-2xl font-headline">Join AgriChain Connect</CardTitle>
